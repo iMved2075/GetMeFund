@@ -24,28 +24,28 @@ const Username = ({ params }) => {
             {/* Show list of supporters as a leaderboard with name, amount and message*/}
             <div className="leaderboard">
               <h2 className='font-bold text-lg text-center pb-5'>Top Supporters</h2>
-              <div className="entry flex justify-between py-2 border-b border-slate-700">
+              <div className="entry flex gap-10 justify-between py-2 border-b border-slate-700">
                 <span className="name w-1/3 font-bold">Name</span>
                 <span className="amount w-1/3 font-bold">Amount</span>
                 <span className="message w-1/3 font-bold">Message</span>
               </div>
-              <div className="entry flex justify-between py-2 border-b border-slate-700">
-                <span className="name w-1/3">John Doe</span>
+              <div className="entry flex gap-10 justify-between py-2 border-b border-slate-700">
+                <span className="flex gap-4 name w-1/3"><img className='w-7 h-7 rounded-full' src="./pp.png" alt="avatar" /><span>John Doe</span></span>
                 <span className="amount w-1/3">$100</span>
                 <span className="message w-1/3">Keep up the great work!</span>
               </div>
-              <div className="entry flex justify-between py-2 border-b border-slate-700">
-                <span className="name w-1/3">Jane Smith</span>
+              <div className="entry flex gap-10 justify-between py-2 border-b border-slate-700">
+                <span className="flex gap-4 name w-1/3"><img className='w-7 h-7 rounded-full' src="./luffy.jpeg" alt="avatar" /><span>Jane Smith</span></span>
                 <span className="amount w-1/3">$50</span>
                 <span className="message w-1/3">Happy to support!</span>
               </div>
-              <div className="entry flex justify-between py-2 border-b border-slate-700">
-                <span className="name w-1/3">Alice Johnson</span>
+              <div className="entry flex gap-10 justify-between py-2 border-b border-slate-700">
+                <span className="flex gap-4 name w-1/3"><img className='w-7 h-7 rounded-full' src="./avatar.gif" alt="avatar" /><span>Alice Johnson</span></span>
                 <span className="amount w-1/3">$75</span>
                 <span className="message w-1/3">Love your work!</span>
               </div>
-              <div className="entry flex justify-between py-2 border-b border-slate-700">
-                <span className="name w-1/3">Bob Brown</span>
+              <div className="entry flex gap-10 justify-between py-2 border-b border-slate-700">
+                <span className="flex gap-4 name w-1/3"><img className='w-7 h-7 rounded-full' src="./avatar.gif" alt="avatar" /><span>Bob Brown</span></span>
                 <span className="amount w-1/3">$30</span>
                 <span className="message w-1/3">Keep it up!</span>
               </div>
@@ -59,9 +59,9 @@ const Username = ({ params }) => {
               <input type="text" placeholder='Message' className='p-3 rounded-lg bg-slate-800 border border-slate-700' />
               <input type="text" placeholder='Amount (USD)' className='p-3 rounded-lg bg-slate-800 border border-slate-700' />
               <div className="presetAmounts flex justify-around gap-3">
-                <button className='bg-slate-800 py-2 px-5 rounded-lg hover:bg-slate-700 transition'>Donate $25</button>
-                <button className='bg-slate-800 py-2 px-5 rounded-lg hover:bg-slate-700 transition'>Donate $50</button>
-                <button className='bg-slate-800 py-2 px-5 rounded-lg hover:bg-slate-700 transition'>Donate $100</button>
+                <button className='bg-slate-800 py-2 px-10 rounded-lg hover:bg-slate-700 transition'>Donate $10</button>
+                <button className='bg-slate-800 py-2 px-10 rounded-lg hover:bg-slate-700 transition'>Donate $20</button>
+                <button className='bg-slate-800 py-2 px-10 rounded-lg hover:bg-slate-700 transition'>Donate $30</button>
               </div>
               <button className='bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-2 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 p-3 rounded-lg font-bold hover:bg-blue-700 transition'>Donate</button>
             </div>
