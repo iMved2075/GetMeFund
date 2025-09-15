@@ -15,7 +15,7 @@ const Navbar = () => {
       </Link>
       <div className='pt-2 relative'>
         {session && <>
-          <button id="dropdownDefaultButton" onClick={() => setshowdropdown(!showdropdown)} data-dropdown-toggle="dropdown" className="hover:cursor-pointer w-44 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-2 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-4 py-2 text-center me-2 mb-2 inline-flex justify-between items-center" type="button">{session.user.name}<svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+          <button id="dropdownDefaultButton" onBlur={()=>{setTimeout(()=>{},200);setshowdropdown(false)}} onClick={() => setshowdropdown(!showdropdown)} data-dropdown-toggle="dropdown" className="hover:cursor-pointer w-44 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-2 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-4 py-2 text-center me-2 mb-2 inline-flex justify-between items-center" type="button">{session.user.name}<svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
           </svg>
           </button>
