@@ -55,8 +55,8 @@ gofundme/
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd gofundme
+   git clone https://github.com/iMved2075/GetMeFund
+   cd GetMeFund
    ```
 
 2. **Install dependencies**
