@@ -103,19 +103,6 @@ Facebook app setup:
 - Website Site URL: `http://localhost:3000/`
 - If the app is in Development, add your Facebook account as a Tester/Developer.
 
-## Common Errors & Fixes
-- loadStripe “.match” error: Missing `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`. Add to `.env.local` and restart.
-- Payments not saved:
-  - Run Stripe CLI listen command.
-  - Set `STRIPE_WEBHOOK_SECRET`.
-  - Webhook must use `await req.text()` and verify signature.
-  - Use `metadata.to_user` consistently.
-- NextAuth OAuthCallback 400:
-  - Redirect URI mismatch or wrong secrets.
-  - Missing `NEXTAUTH_URL` or `NEXTAUTH_SECRET`.
-  - Facebook app not set to include your tester account.
-- E11000 duplicate email:
-  - Always upsert by `email` in `signIn` callback (do not AND-query `email`+`username`).
 
 ## Scripts
 - `npm run dev` – start dev server
