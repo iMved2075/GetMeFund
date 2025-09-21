@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Modal from "./Modal";
 import { setAddress } from "@/actions/useractions";
 import { useSession } from 'next-auth/react';
+import { toast, Bounce } from 'react-toastify';
 
 
 const AddressModal = ({ isOpen, onClose, initialData, onSave, username }) => {
@@ -23,6 +24,16 @@ const AddressModal = ({ isOpen, onClose, initialData, onSave, username }) => {
     onSave && onSave(form);
     await setAddress(username, form);
     await updateSession();
+    toast.success('Address updated successfully!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "dark",
+      transition: Bounce,
+    });
     onClose();
   };
 
@@ -41,12 +52,12 @@ const AddressModal = ({ isOpen, onClose, initialData, onSave, username }) => {
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">City / State</label>
-            <input
-              name="cityState"
-              value={form.cityState}
-              onChange={handleChange}
-              className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800"
-            />
+          <input
+            name="cityState"
+            value={form.cityState}
+            onChange={handleChange}
+            className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800"
+          />
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Postal Code</label>
