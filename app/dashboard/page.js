@@ -7,7 +7,7 @@ import PersonalInfoModal from '@/components/PersonalInfoModal'
 import AddressModal from '@/components/AddressModal'
 import { fetchuser } from '@/actions/useractions'
 import PaymentInfoModal from '@/components/PayemntInfoModal'
-import UserPicModal from '@/components/UserPicModal'
+import ProfilePicModal from '@/components/ProfilePicModal'
 
 
 const Dashboard = () => {
@@ -56,7 +56,7 @@ const Dashboard = () => {
     if (!key || typeof key !== 'string') return ''
     const start = key.slice(0, visibleStart)
     const end = key.length > 4 ? key.slice(-4) : ''
-    const middleLen = Math.max(0, key.length - visibleStart - end.length)
+    const middleLen = Math.max(0, 8)
     return `${start}${'\u2022'.repeat(middleLen)}${end}`
   }
 
@@ -108,6 +108,7 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
+    document.title = "Dashboard - GetMeFund"
     if (status === 'unauthenticated') {
       router.push('/login')
     }
@@ -132,16 +133,23 @@ const Dashboard = () => {
         <h2 className='font-bold text-lg px-2'>Profile</h2>
         <div className='flex justify-between border-2 border-slate-800 rounded-xl'>
           <div className='flex gap-5 p-8'>
-            <img className='rounded-full w-20 h-20' src={profilePicLinks.profilePic} alt="profile" onClick={() => setIsProfilePicOpen(true)} />
+            <img 
+              className='rounded-full w-20 h-20 cursor-pointer hover:opacity-90 transition-opacity' 
+              src={profilePicLinks.profilePic} 
+              alt="profile" 
+              onClick={() => setIsProfilePicOpen(true)} 
+            />
+            
+            {/* Profile Picture Modal */}
             {isProfilePicOpen && (
-              <UserPicModal
+              <ProfilePicModal
                 isOpen={isProfilePicOpen}
                 onClose={() => setIsProfilePicOpen(false)}
-                initialLinks={profilePicLinks}
+                initialData={profilePicLinks}
                 onSave={setProfilePicLinks}
-                username={session.user.email}
+                username={personalInfo.email}
               />
-            )}
+            )}           
             <div className='flex flex-col gap-2 p-3'>
               <span className='name font-bold'>
                 {personalInfo.username}
@@ -183,9 +191,8 @@ const Dashboard = () => {
             </a>
             <a href={socialLinks.github || '#'} target="_blank" rel="noopener noreferrer">
               <img
-                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xMiAyQTEwIDEwIDAgMCAwIDIgMTJjMCA0LjQyIDIuODcgOC4xNyA2Ljg0IDkuNWMuNS4wOC42Ni0uMjMuNjYtLjV2LTEuNjljLTIuNzcuNi0zLjM2LTEuMzQtMy4zNi0xLjM0Yy0uNDYtMS4xNi0xLjExLTEuNDctMS4xMS0xLjQ3Yy0uOTEtLjYyLjA3LS42LjA3LS42YzEgLjA3IDEuNTMgMS4wMyAxLjUzIDEuMDNjLjg3IDEuNTIgMi4zNCAxLjA3IDIuOTEuODNjLjA5LS42NS4zNS0xLjA5LjYzLTEuMzRjLTIuMjItLjI1LTQuNTUtMS4xMS00LjU1LTQuOTJjMC0xLjExLjM4LTIgMS4wMy0yLjcxYy0uMS0uMjUtLjQ1LTEuMjkuMS0yLjY0YzAgMCAuODQtLjI3IDIuNzUgMS4wMmMuNzktLjIyIDEuNjUtLjMzIDIuNS0uMzNzMS43MS4xMSAyLjUuMzNjMS45MS0xLjI5IDIuNzUtMS4wMiAyLjc1LTEuMDJjLjU1IDEuMzUuMiAyLjM5LjEgMi42NGMuNjUuNzEgMS4wMyAxLjYgMS4wMyAyLjcxYzAgMy44Mi0yLjM0IDQuNjYtNC41NyA0LjkxYy4zNi4zMS42OS45Mi42OSAxLjg1VjIxYzAgLjI3LjE2LjU5LjY3LjVDMTkuMTQgMjAuMTYgMjIgMTYuNDIgMjIgMTJBMTAgMTAgMCAwIDAgMTIgMiIvPjwvc3ZnPg=="
+                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xMiAyQTEwIDEwIDAgMCAwIDIgMTJjMCA0LjQyIDIuODcgOC4xNyA2Ljg0IDkuNWMuNS4wOC42Ni0uMjMuNjYtLjV2LTEuNjljLTIuNzcuNi0zLjM2LTEuMzQtMy4zNi0xLjM0Yy0uNDYtMS4xNi0xLjExLTEuNDctMS4xMS0xLjQ3Yy0uOTEtLjYyLjA3LS42LjA3LS42YzEgLjA3IDEuNTMgMS4wMyAxLjUzIDEuMDNjLjg3IDEuNTIgMi4zNCAxLjA3IDIuOTEuODNjLjA5LS42NS4zNS0xLjA5LjYzLTEuMzRjLTIuMjItLjI1LTQuNTUtMS4xMS00LjU1LTQuOTJjMC0xLjExLjM4LTIgMS4wMy0yLjcxYy0uMS0uMjUtLjQ1LTEuMjkuMS0yLjY0YzAgMCAuODQtLjI3IDIuNzUgMS4wMmMuNzktLjIyIDEuNjUtLjMzIDIuNS0uMzNzMS43MS4xMSAyLjUuMzNjMS45MS0xLjI5IDIuNzUtMS4wMiAyLjc1LTEuMDJjLjU1IDEuMzUuMiAyLjM5LjEgMi42NGMuNjUuNzEgMS4wMyAxLjYgMS4wMyAyLjcxYzAgMy44Mi0yLjM0IDQuNjYtNC41NyA0LjkxYy4zNi4zMS42OS45Mi42OSAxLjg1VjIxYzAgLjI3LjE2LjU5LjY3LjVDMTkuMTQgMjAuMTYgMjIgMTYuNDIgMjIgMTJBMTAgMTAgMCAwIDAgMTIuMiA2IiBjbGlwLXBhdGg9InVybCgjU1ZHRzFPdDRjQUQpIi8+PC9zdmc+" alt="GitHub"
                 className='border hover:invert-75 h-10 rounded-full w-10 p-1 mt-2 invert-50'
-                alt="GitHub"
               />
             </a>
             <a href={socialLinks.youtube || '#'} target="_blank" rel="noopener noreferrer">
@@ -208,7 +215,7 @@ const Dashboard = () => {
                 onClose={() => setIsModalOpen(false)}
                 initialLinks={socialLinks}
                 onSave={setSocialLinks}
-                username={session.user.email}
+                username={personalInfo.email}
               />
             )}
           </div>
@@ -258,7 +265,7 @@ const Dashboard = () => {
               onClose={() => setIsPersonalOpen(false)}
               initialData={personalInfo}
               onSave={setPersonalInfo}
-              username={session.user.email}
+              username={personalInfo.email}
             />
           )}
         </div>
@@ -297,7 +304,7 @@ const Dashboard = () => {
               onClose={() => setIsAddressOpen(false)}
               initialData={address}
               onSave={setAddress}
-              username={session.user.email}
+              username={personalInfo.email}
             />
           )}
         </div>
@@ -337,7 +344,7 @@ const Dashboard = () => {
               onClose={() => setIsPaymentOpen(false)}
               initialData={paymentInfo}
               onSave={setPaymentInfo}
-              username={session.user.email}
+              username={personalInfo.email}
             />
           )}
         </div>
