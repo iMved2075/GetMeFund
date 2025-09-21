@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Modal from "./Modal";
 import { setSocialLinks } from "@/actions/useractions";
+import { toast, Bounce } from 'react-toastify';
 
 const Social = ({ isOpen, onClose, initialLinks, onSave, username }) => {
   const [links, setLinks] = useState(initialLinks);
@@ -20,6 +21,16 @@ const Social = ({ isOpen, onClose, initialLinks, onSave, username }) => {
     console.log("Updated social links:", links);
     if (onSave) onSave(links);
     setSocialLinks(username, links);
+    toast.success('Social links updated successfully!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "dark",
+      transition: Bounce,
+    });
     onClose();
   };
 
