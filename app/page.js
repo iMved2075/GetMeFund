@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function Home() {
   return (
     <>
@@ -7,8 +8,12 @@ export default function Home() {
           A crowdfunding platform for creators. Get funded by a large global community. Start Now!
         </p>
         <div className="flex gap-5 py-10">
-          <button type="button" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-2 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Start Now</button>
-          <button type="button" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-2 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Read More</button>
+          <Link href="/login">
+            <button type="button" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-2 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Start Now</button>
+          </Link>
+          <Link href="/About">
+            <button type="button" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-2 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Read More</button>
+          </Link>
         </div>
       </div>
       <div className="bg-cyan-700 h-1 opacity-20">
