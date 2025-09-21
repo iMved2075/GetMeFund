@@ -6,22 +6,27 @@ import Social from '@/components/Social'
 import PersonalInfoModal from '@/components/PersonalInfoModal'
 import AddressModal from '@/components/AddressModal'
 import { fetchuser } from '@/actions/useractions'
+import PaymentInfoModal from '@/components/PayemntInfoModal'
+import UserPicModal from '@/components/UserPicModal'
+
 
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPersonalOpen, setIsPersonalOpen] = useState(false);
   const [isAddressOpen, setIsAddressOpen] = useState(false);
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [isProfilePicOpen, setIsProfilePicOpen] = useState(false);
   const { data: session, status } = useSession()
   const router = useRouter()
 
   const [personalInfo, setPersonalInfo] = useState({
+    username: '',
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
     bio: '',
     role: '',
-    profilePic: './pp.png'
   });
   const [address, setAddress] = useState({
     country: '',
@@ -36,18 +41,48 @@ const Dashboard = () => {
     github: '',
     youtube: ''
   });
+  const [paymentInfo, setPaymentInfo] = useState({
+    publishableKey: '',
+    secretKey: ''
+  });
+
+  const [profilePicLinks, setProfilePicLinks] = useState({  });
+
+  // Copy status for visual feedback
+  const [copyStatus, setCopyStatus] = useState({ pk: '', sk: '' })
+
+  // Mask a key showing first N and last 4 chars
+  const maskKey = (key, visibleStart = 6) => {
+    if (!key || typeof key !== 'string') return ''
+    const start = key.slice(0, visibleStart)
+    const end = key.length > 4 ? key.slice(-4) : ''
+    const middleLen = Math.max(0, key.length - visibleStart - end.length)
+    return `${start}${'\u2022'.repeat(middleLen)}${end}`
+  }
+
+  const handleCopy = async (text, type) => {
+    try {
+      if (!text) return
+      await navigator.clipboard.writeText(text)
+      setCopyStatus((s) => ({ ...s, [type]: 'Copied!' }))
+      setTimeout(() => setCopyStatus((s) => ({ ...s, [type]: '' })), 1500)
+    } catch (e) {
+      console.error('Copy failed:', e)
+      setCopyStatus((s) => ({ ...s, [type]: 'Copy failed' }))
+      setTimeout(() => setCopyStatus((s) => ({ ...s, [type]: '' })), 1500)
+    }
+  }
 
   const getData = async () => {
-    let u  = await fetchuser(session.user.name)
+    let u = await fetchuser(session.user.name)
     setPersonalInfo({
-      name: u.username,
+      username: u.username,
       firstName: u.firstName,
       lastName: u.lastName,
       email: u.email,
       phone: u.phone,
       bio: u.bio,
       role: u.role,
-      profilePic: u.profilePic || './pp.png'
     })
     setAddress({
       country: u.country,
@@ -62,13 +97,21 @@ const Dashboard = () => {
       github: u.socialMedia.github,
       youtube: u.socialMedia.youtube
     })
+    setPaymentInfo({
+      publishableKey: u.stripePublishableKey,
+      secretKey: u.stripeSecretKey
+    })
+    setProfilePicLinks({
+      profilePic: u.profilePic || './pp.png',
+      coverPic: u.coverPic || './luffy.jpeg'
+    })
   }
 
   useEffect(() => {
     if (status === 'unauthenticated') {
       router.push('/login')
     }
-    else if(status === 'authenticated' && session && session.user){
+    else if (status === 'authenticated' && session && session.user) {
       getData()
     }
   }, [status, router])
@@ -89,10 +132,19 @@ const Dashboard = () => {
         <h2 className='font-bold text-lg px-2'>Profile</h2>
         <div className='flex justify-between border-2 border-slate-800 rounded-xl'>
           <div className='flex gap-5 p-8'>
-            <img className='rounded-full w-20 h-20' src={personalInfo.profilePic} alt="profile"/>
+            <img className='rounded-full w-20 h-20' src={profilePicLinks.profilePic} alt="profile" onClick={() => setIsProfilePicOpen(true)} />
+            {isProfilePicOpen && (
+              <UserPicModal
+                isOpen={isProfilePicOpen}
+                onClose={() => setIsProfilePicOpen(false)}
+                initialLinks={profilePicLinks}
+                onSave={setProfilePicLinks}
+                username={session.user.email}
+              />
+            )}
             <div className='flex flex-col gap-2 p-3'>
               <span className='name font-bold'>
-                {personalInfo.name}
+                {personalInfo.username}
               </span>
               <span className='role text-slate-400'>
                 {personalInfo.role} | {address.country}
@@ -174,16 +226,16 @@ const Dashboard = () => {
               <span>{personalInfo.lastName}</span>
             </div>
           </div>
-            <div className='mailNumber flex justify-between w-1/2 pb-10'>
-              <div className="mail flex flex-col gap-3 px-2 w-1/2">
-                <span className='text-xs font-medium text-slate-400'>Email Address</span>
-                <span>{personalInfo.email}</span>
-              </div>
-              <div className="phone flex flex-col gap-3 px-2 w-1/2">
-                <span className='text-xs font-medium text-slate-400'>Phone</span>
-                <span>{personalInfo.phone}</span>
-              </div>
+          <div className='mailNumber flex justify-between w-1/2 pb-10'>
+            <div className="mail flex flex-col gap-3 px-2 w-1/2">
+              <span className='text-xs font-medium text-slate-400'>Email Address</span>
+              <span>{personalInfo.email}</span>
             </div>
+            <div className="phone flex flex-col gap-3 px-2 w-1/2">
+              <span className='text-xs font-medium text-slate-400'>Phone</span>
+              <span>{personalInfo.phone}</span>
+            </div>
+          </div>
           <div className='mailNumber flex justify-between w-1/2'>
             <div className="mail flex flex-col gap-3 px-2 w-1/2">
               <span className='text-xs font-medium text-slate-400'>Bio</span>
@@ -245,6 +297,46 @@ const Dashboard = () => {
               onClose={() => setIsAddressOpen(false)}
               initialData={address}
               onSave={setAddress}
+              username={session.user.email}
+            />
+          )}
+        </div>
+        <div className='p-8 border-2 border-slate-800 rounded-xl'>
+          <h2 className='font-bold text-lg px-2 pb-5'>Payment Information</h2>
+          <div className='address flex justify-between pb-10'>
+            <div className="country flex flex-col gap-2 px-2">
+              <span className='text-xs font-medium text-slate-400'>Publishable Key</span>
+              <div className='flex items-center gap-2'>
+                <code className='px-2 py-1 text-slate-200'>
+                  {maskKey(paymentInfo.publishableKey, 8)}
+                </code>
+                <button
+                  onClick={() => handleCopy(paymentInfo.publishableKey, 'pk')}
+                  className='text-xs text-slate-500 px-2 py-1'
+                  title='Copy publishable key'
+                >
+                  <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xNS4yNCAyaC0zLjg5NGMtMS43NjQgMC0zLjE2MiAwLTQuMjU1LjE0OGMtMS4xMjYuMTUyLTIuMDM3LjQ3Mi0yLjc1NSAxLjE5M2MtLjcxOS43MjEtMS4wMzggMS42MzYtMS4xODkgMi43NjZDMyA3LjIwNSAzIDguNjA4IDMgMTAuMzc5djUuODM4YzAgMS41MDguOTIgMi44IDIuMjI3IDMuMzQyYy0uMDY3LS45MS0uMDY3LTIuMTg1LS4wNjctMy4yNDd2LTUuMDFjMC0xLjI4MSAwLTIuMzg2LjExOC0zLjI3Yy4xMjctLjk0OC40MTMtMS44NTYgMS4xNDctMi41OTNzMS42MzktMS4wMjQgMi41ODMtMS4xNTJjLjg4LS4xMTggMS45OC0uMTE4IDMuMjU3LS4xMThoMy4wN2MxLjI3NiAwIDIuMzc0IDAgMy4yNTUuMTE4QTMuNiAzLjYgMCAwIDAgMTUuMjQgMiIvPjxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0iTTYuNiAxMS4zOTdjMC0yLjcyNiAwLTQuMDg5Ljg0NC00LjkzNmMuODQzLS44NDcgMi4yLS44NDcgNC45MTYtLjg0N2gyLjg4YzIuNzE1IDAgNC4wNzMgMCA0LjkxNy44NDdTMjEgOC42NzEgMjEgMTEuMzk3djQuODJjMCAyLjcyNiAwIDQuMDg5LS44NDMgNC45MzZjLS44NDQuODQ3LTIuMjAyLjg0Ny00LjkxNy44NDdoLTIuODhjLTIuNzE1IDAtNC4wNzMgMC00LjkxNi0uODQ3Yy0uODQ0LS44NDctLjg0NC0yLjIxLS44NDQtNC45MzZ6Ii8+PC9zdmc+" alt="copy" className='invert-75 hover:invert-50' />
+                </button>
+              </div>
+              {copyStatus.pk && <span className='text-xs text-green-400'>{copyStatus.pk}</span>}
+            </div>
+          </div>
+          <div className='flex justify-between'>
+            <span></span>
+            <button
+              onClick={() => setIsPaymentOpen(true)}
+              className='flex border pl-2 pr-4 py-2 bg-slate-800 text-slate-400 rounded-full hover:bg-slate-700 hover:text-white'
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="m5 16l-1 4l4-1L19.586 7.414a2 2 0 0 0 0-2.828l-.172-.172a2 2 0 0 0-2.828 0zM15 6l3 3m-5 11h8" strokeWidth="1" /></svg>
+              Edit
+            </button>
+          </div>
+          {isPaymentOpen && (
+            <PaymentInfoModal
+              isOpen={isPaymentOpen}
+              onClose={() => setIsPaymentOpen(false)}
+              initialData={paymentInfo}
+              onSave={setPaymentInfo}
               username={session.user.email}
             />
           )}
