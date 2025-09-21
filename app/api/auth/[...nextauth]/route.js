@@ -55,7 +55,6 @@ export const authoptions = NextAuth({
               youtube: "https://www.youtube.com"
             }
           })
-          console.log("New user created:", newUser)
         }
         return true
       }
@@ -77,7 +76,6 @@ export const authoptions = NextAuth({
               youtube: "https://www.youtube.com"
             }
           })
-          console.log("New user created:", newUser)
         }
         return true
       }

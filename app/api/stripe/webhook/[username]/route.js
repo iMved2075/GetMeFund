@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 export async function POST(req, { params }) {
   const username = params?.username
-  console.log('📌 Webhook received for user:', username)
+
 
   if (!username) {
     return new Response('Missing username', { status: 400 })
@@ -21,7 +21,7 @@ export async function POST(req, { params }) {
   }
 
   const rawBody = await req.text()
-  console.log('📦 Raw body length:', rawBody.length)
+
 
   await connectDb()
   const user = await User.findOne({ username })
@@ -36,7 +36,7 @@ export async function POST(req, { params }) {
     // API key is not required for verification, but Stripe SDK requires an instance
     const stripe = new Stripe(user.stripeSecretKey || 'sk_test_dummy')
     event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret)
-    console.log('✅ Event verified:', event.type)
+  
   } catch (err) {
     console.error('❌ Webhook verification failed:', err.message)
     return new Response(`Webhook Error: ${err.message}`, { status: 400 })
@@ -47,8 +47,8 @@ export async function POST(req, { params }) {
       const pi = event.data.object
       const meta = pi.metadata || {}
 
-      console.log('💰 Payment succeeded:', pi.id)
-      console.log('📋 Metadata:', JSON.stringify(meta))
+    
+    
 
       const payment = await Payment.findOneAndUpdate(
         { oid: pi.id },
@@ -69,9 +69,9 @@ export async function POST(req, { params }) {
         }
       )
 
-      console.log('✅ Payment saved:', JSON.stringify(payment))
+    
     } else {
-      console.log('ℹ️ Ignoring event:', event.type)
+    
     }
   } catch (err) {
     console.error('❌ Webhook handler failed:', err.message)

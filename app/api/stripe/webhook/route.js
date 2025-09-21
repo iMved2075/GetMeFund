@@ -9,7 +9,7 @@ export async function POST(req) {
   // Note: For standalone per-creator Stripe accounts, prefer
   // /api/stripe/webhook/[username] so each creator can set their own webhook secret.
   // This route remains for single-account/platform setups.
-  console.log('📌 Webhook received')
+
   
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
   if (!webhookSecret) {
@@ -24,13 +24,13 @@ export async function POST(req) {
   }
   
   const rawBody = await req.text()
-  console.log('📦 Raw body length:', rawBody.length)
+
 
   let event
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
     event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret)
-    console.log('✅ Event verified:', event.type)
+  
   } catch (err) {
     console.error('❌ Webhook verification failed:', err.message)
     return new Response(`Webhook Error: ${err.message}`, { status: 400 })
@@ -41,19 +41,19 @@ export async function POST(req) {
       const pi = event.data.object
       const meta = pi.metadata || {}
       
-      console.log('💰 Payment succeeded:', pi.id)
-      console.log('📋 Metadata:', JSON.stringify(meta))
+    
+    
       
-      console.log('🔌 Connecting to DB...')
+    
       try {
         await connectDb()
-        console.log('✅ DB connected')
+      
       } catch (dbErr) {
         console.error('❌ DB connection failed:', dbErr)
         throw dbErr
       }
       
-      console.log('💾 Saving payment...')
+    
       const payment = await Payment.findOneAndUpdate(
         { oid: pi.id },
         {
@@ -73,9 +73,9 @@ export async function POST(req) {
         }
       )
       
-      console.log('✅ Payment saved:', JSON.stringify(payment))
+    
     } else {
-      console.log('ℹ️ Ignoring event:', event.type)
+    
     }
   } catch (err) {
     console.error('❌ Webhook handler failed:', err.message)

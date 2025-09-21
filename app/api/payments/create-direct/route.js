@@ -6,7 +6,6 @@ import Payment from '@/models/Payment';
 export async function POST(req) {
   try {
     const payment = await req.json();
-    console.log('Creating payment directly:', payment);
     
     await connectDb();
     const result = await Payment.create(payment);

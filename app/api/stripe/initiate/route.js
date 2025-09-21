@@ -7,11 +7,6 @@ export async function POST(req) {
     if (!amount || Number(amount) <= 0) {
       return NextResponse.json({ error: 'Invalid amount' }, { status: 400 })
     }
-    console.log('Creating payment intent with metadata:', {
-      to_user: to_user || '',
-      name: name || '',
-      message: message || ''
-    })
     const pi = await initiate(amount, to_user, { name, message })
     return NextResponse.json({ clientSecret: pi.client_secret, id: pi.id })
   } catch (e) {

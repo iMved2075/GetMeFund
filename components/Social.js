@@ -18,7 +18,7 @@ const Social = ({ isOpen, onClose, initialLinks, onSave, username }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Updated social links:", links);
+    
     if (onSave) onSave(links);
     setSocialLinks(username, links);
     toast.success('Social links updated successfully!', {
