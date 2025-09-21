@@ -6,6 +6,9 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 export async function POST(req) {
+  // Note: For standalone per-creator Stripe accounts, prefer
+  // /api/stripe/webhook/[username] so each creator can set their own webhook secret.
+  // This route remains for single-account/platform setups.
   console.log('📌 Webhook received')
   
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET

@@ -1,17 +1,23 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import connectDb from '@/db/connectDb'
+import User from '@/models/User'
 
 export async function POST(req) {
   try {
-    const { amount, to_username, name, message } = await req.json()
-    if (!process.env.STRIPE_SECRET_KEY) {
-      return NextResponse.json({ error: 'Missing STRIPE_SECRET_KEY' }, { status: 500 })
-    }
+    const { amount, to_user, name, message } = await req.json()
     if (!amount || Number(amount) <= 0) {
       return NextResponse.json({ error: 'Invalid amount' }, { status: 400 })
     }
 
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+    await connectDb()
+    const recipient = await User.findOne({ username: to_user })
+    const secret = recipient?.stripeSecretKey
+    if (!secret) {
+      return NextResponse.json({ error: 'Stripe not configured for this creator' }, { status: 400 })
+    }
+
+    const stripe = new Stripe(secret)
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
@@ -21,7 +27,7 @@ export async function POST(req) {
           price_data: {
             currency: 'inr',
             product_data: {
-              name: `Support for ${to_username}`,
+              name: `Support for ${to_user}`,
               description: message || 'Donation',
             },
             unit_amount: Math.round(Number(amount) * 100), // INR paise
@@ -29,7 +35,7 @@ export async function POST(req) {
           quantity: 1,
         },
       ],
-      metadata: { to_username, name: name || '', message: message || '' },
+      metadata: { to_user, name: name || '', message: message || '' },
       success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/success`,
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/cancel`,
     })

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import connectDb from '@/db/connectDb'
 import Payment from '@/models/Payment'
+import User from '@/models/User'
 
 export async function POST(req) {
   try {
@@ -13,8 +14,22 @@ export async function POST(req) {
 
     await connectDb()
     
-    // Verify with Stripe API
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+    // Try to infer recipient to use correct secret key
+    let toUser = ''
+    const existing = await Payment.findOne({ oid: paymentIntentId })
+    if (existing?.to_user) toUser = existing.to_user
+    
+    let secret = null
+    if (toUser) {
+      const recipient = await User.findOne({ username: toUser })
+      secret = recipient?.stripeSecretKey || null
+    }
+    // Fallback: if we cannot infer, we cannot safely verify without platform key
+    if (!secret) {
+      return NextResponse.json({ error: 'Cannot verify payment without creator key' }, { status: 400 })
+    }
+
+    const stripe = new Stripe(secret)
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId)
     
     if (!paymentIntent || paymentIntent.status !== 'succeeded') {
