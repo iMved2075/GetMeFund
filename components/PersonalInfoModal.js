@@ -2,11 +2,13 @@
 import { useState, useEffect } from "react";
 import Modal from "./Modal";
 import { setPersonalInfo } from "@/actions/useractions";
+import { toast, Bounce } from 'react-toastify';
 import { useSession } from "next-auth/react";
 
 
 const PersonalInfoModal = ({ isOpen, onClose, initialData, onSave, username }) => {
   const [form, setForm] = useState(initialData);
+  const [loading, setLoading] = useState(false);
   const { data: session, update: updateSession } = useSession();
 
   useEffect(() => {
@@ -20,10 +22,51 @@ const PersonalInfoModal = ({ isOpen, onClose, initialData, onSave, username }) =
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    try{
     onSave && onSave(form);
     await setPersonalInfo(username, form);
     await updateSession();
+    await setPersonalInfo(username, form);
+    toast.success('Personal information updated successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+        transition: Bounce,
+      });
     onClose();
+    } catch (error) {
+      if (error.message === "Username already taken") {
+        toast.error('Username already taken! Please choose a different one.', {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+          transition: Bounce,
+        });
+      } else {
+        toast.error('Failed to update personal information. Please try again.', {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+          transition: Bounce,
+        });
+      }
+      console.error('Error updating personal info:', error);
+    }finally {
+      setLoading(false);
+    }
   };
 
   return (
