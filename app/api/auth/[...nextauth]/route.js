@@ -35,7 +35,7 @@ export const authoptions = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      if (account.provider == 'github' || account.provider == "google") {
+      if (account.provider == 'github' || account.provider == "google" || account.provider == "facebook") {
         await connectDb()
 
         //check if the user already exists in the database
@@ -44,7 +44,7 @@ export const authoptions = NextAuth({
           //create new user
           const newUser = await User.create({
             email: user.email,
-            username: user.name,
+            username: user.email.split("@")[0],
             profilePic: user.image, // Save profile picture from OAuth provider
             socialMedia: {
               facebook: "https://www.facebook.com",
@@ -66,7 +66,7 @@ export const authoptions = NextAuth({
           //create new user
           const newUser = await User.create({
             email: user.email,
-            username: user.name,
+            username: user.email.split("@")[0],
             profilePic: user.image, // Save profile picture from OAuth provider
             socialMedia: {
               facebook: "https://www.facebook.com",
