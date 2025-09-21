@@ -3,12 +3,9 @@ import React, { useState, useEffect } from 'react'
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
-import { useSession } from 'next-auth/react'
 import { fetchuser, fetchpayments } from '@/actions/useractions'
-import UserPicModal from './UserPicModal'
-import { set } from 'mongoose'
-
-// We no longer use a global env publishable key; we'll load the recipient user's key dynamically.
+import ProfilePicModal from './ProfilePicModal'
+import CoverPicModal from './CoverPicModal'
 
 // Form rendered when Stripe is NOT configured (no Elements wrapper, no hooks)
 function DonateFormNoStripe({ username }) {
@@ -19,11 +16,9 @@ function DonateFormNoStripe({ username }) {
   const [errorMsg, setErrorMsg] = useState('')
   const [currentUser, setcurrentUser] = useState({})
   const [payments, setpayments] = useState([])
-  const [profilePicModalOpen, setProfilePicModalOpen] = useState(false)
-  const [profilePicLinks, setProfilePicLinks] = useState({
-    profilePic: '',
-    coverPic: ''
-  })
+  const [isProfilePicOpen, setIsProfilePicOpen] = useState(false);
+  const [isCoverPicOpen, setIsCoverPicOpen] = useState(false);
+  const [profilePicLinks, setProfilePicLinks] = useState({  })
 
   useEffect(() => {
     getData()
@@ -33,8 +28,8 @@ function DonateFormNoStripe({ username }) {
     let u = await fetchuser(username)
     setcurrentUser(u || {})
     setProfilePicLinks({
-      profilePic: u?.profilePic || './pp.png',
-      coverPic: u?.coverPic || './luffy.jpeg'
+      profilePic: u?.profilePic || '/pp.png',
+      coverPic: u?.coverPic || '/luffy.jpeg'
     })
     let dbpayments = await fetchpayments(username)
     setpayments(dbpayments || [])
@@ -71,20 +66,44 @@ function DonateFormNoStripe({ username }) {
         transition={Bounce}
       />
       <div className='cover w-full relative'>
-        <img src={currentUser?.coverPic || '/luffy.jpeg'} alt="cover" className="object-cover w-full h-[350]" onClick={() => setProfilePicModalOpen(true)}/>
+        <img 
+          src={profilePicLinks.coverPic} 
+          alt="cover" 
+          className="object-cover w-full h-[350] cursor-pointer hover:opacity-90 transition-opacity" 
+          onDoubleClick={() => setIsCoverPicOpen(true)} 
+        />
         <div className='absolute -bottom-25 right-[43.5%] border-2 border-white rounded-full'>
-          <img className='rounded-full h-48 w-48' src={currentUser?.profilePic || '/pp.png'} alt="profile" onClick={() => setProfilePicModalOpen(true)} />
+          <img 
+            className='rounded-full h-48 w-48 cursor-pointer hover:opacity-90 transition-opacity' 
+            src={profilePicLinks.profilePic} 
+            alt="profile" 
+            onDoubleClick={() => setIsProfilePicOpen(true)} 
+          />
         </div>
-        {profilePicModalOpen && (
-              <UserPicModal
-                isOpen={profilePicModalOpen}
-                onClose={() => setProfilePicModalOpen(false)}
-                initialLinks={profilePicLinks}
-                onSave={setProfilePicLinks}
-                username={currentUser?.email}
-              />
-            )}
+        
+        {/* Profile Picture Modal */}
+        {isProfilePicOpen && (
+          <ProfilePicModal
+            isOpen={isProfilePicOpen}
+            onClose={() => setIsProfilePicOpen(false)}
+            initialData={profilePicLinks}
+            onSave={setProfilePicLinks}
+            username={currentUser?.email || username}
+          />
+        )}
+
+        {/* Cover Picture Modal */}
+        {isCoverPicOpen && (
+          <CoverPicModal
+            isOpen={isCoverPicOpen}
+            onClose={() => setIsCoverPicOpen(false)}
+            initialData={profilePicLinks}
+            onSave={setProfilePicLinks}
+            username={currentUser?.email || username}
+          />
+        )}
       </div>
+      
       <div className="info flex flex-col gap-2 justify-center items-center my-28">
         <div className='font-bold text-lg'>
           @{currentUser?.username || 'user'}
@@ -181,8 +200,9 @@ function DonateFormStripe({ username }) {
   const [errorMsg, setErrorMsg] = useState('')
   const [currentUser, setcurrentUser] = useState({})
   const [payments, setpayments] = useState([])
-  const [profilePicModalOpen, setProfilePicModalOpen] = useState(false)
-  const [profilePicLinks, setProfilePicLinks] = useState({  })
+  const [isProfilePicOpen, setIsProfilePicOpen] = useState(false);
+  const [isCoverPicOpen, setIsCoverPicOpen] = useState(false);
+  const [profilePicLinks, setProfilePicLinks] = useState({})
 
   const stripe = useStripe()
   const elements = useElements()
@@ -192,8 +212,8 @@ function DonateFormStripe({ username }) {
       let u = await fetchuser(username)
       setcurrentUser(u || {})
       setProfilePicLinks({
-        profilePic: u?.profilePic || './pp.png',
-        coverPic: u?.coverPic || './luffy.jpeg'
+        profilePic: u?.profilePic || '/pp.png',
+        coverPic: u?.coverPic || '/luffy.jpeg'
       })
       let dbpayments = await fetchpayments(username)
       setpayments(dbpayments || [])
@@ -290,20 +310,44 @@ function DonateFormStripe({ username }) {
         transition={Bounce}
       />
       <div className='cover w-full relative'>
-        <img src={profilePicLinks.coverPic} alt="cover" className="object-cover w-full h-[350]" onClick={() => setProfilePicModalOpen(true)}/>
+        <img 
+          src={profilePicLinks.coverPic} 
+          alt="cover" 
+          className="object-cover w-full h-[350] cursor-pointer transition-opacity" 
+          onDoubleClick={() => setIsCoverPicOpen(true)} 
+        />
         <div className='absolute -bottom-25 right-[43.5%] border-2 border-white rounded-full'>
-          <img className='rounded-full h-48 w-48' src={profilePicLinks.profilePic} alt="profile" onClick={() => setProfilePicModalOpen(true)}/>
+          <img 
+            className='rounded-full h-48 w-48 cursor-pointer transition-opacity' 
+            src={profilePicLinks.profilePic} 
+            alt="profile" 
+            onDoubleClick={() => setIsProfilePicOpen(true)} 
+          />
         </div>
-        {profilePicModalOpen && (
-              <UserPicModal
-                isOpen={profilePicModalOpen}
-                onClose={() => setProfilePicModalOpen(false)}
-                initialLinks={profilePicLinks}
-                onSave={setProfilePicLinks}
-                username={currentUser?.email}
-              />
-            )}
+
+        {/* Profile Picture Modal */}
+        {isProfilePicOpen && (
+          <ProfilePicModal
+            isOpen={isProfilePicOpen}
+            onClose={() => setIsProfilePicOpen(false)}
+            initialData={profilePicLinks}
+            onSave={setProfilePicLinks}
+            username={currentUser?.email || username}
+          />
+        )}
+
+        {/* Cover Picture Modal */}
+        {isCoverPicOpen && (
+          <CoverPicModal
+            isOpen={isCoverPicOpen}
+            onClose={() => setIsCoverPicOpen(false)}
+            initialData={profilePicLinks}
+            onSave={setProfilePicLinks}
+            username={currentUser?.email || username}
+          />
+        )}
       </div>
+      
       <div className="info flex flex-col gap-2 justify-center items-center my-28">
         <div className='font-bold text-lg'>
           @{currentUser?.username || 'user'}
@@ -312,7 +356,9 @@ function DonateFormStripe({ username }) {
           {currentUser?.bio || 'This user has no bio'}
         </div>
         <div className='text-slate-400'>
-          9,719 members . 82 posts . $15,450/release
+          <span>{payments.length} payments </span>
+          <span className='font-extrabold'> . </span>
+          <span>₹ {payments.reduce((acc, p) => acc + p.amount, 0)} collected</span>
         </div>
         <div className="payment flex gap-3 w-[80%] mt-11">
           <div className="supporters w-1/2 bg-slate-900 text-white rounded-lg p-10">
@@ -387,7 +433,7 @@ function DonateFormStripe({ username }) {
               <button
                 className='bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-2 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 p-3 rounded-lg font-bold disabled:opacity-60'
                 onClick={handleDonate}
-                disabled={loading}
+                disabled={name.trim().length < 3 || !amount || Number(amount) <= 0 || message.trim().length < 1 || Number(amount) > 50000 || loading}
               >
                 {loading ? 'Processing...' : 'Donate'}
               </button>
@@ -409,7 +455,7 @@ const PaymentPage = ({ username }) => {
         const user = await fetchuser(username)
         const pk = user?.stripePublishableKey?.trim()
         if (!pk) {
-          if (mounted) setStripePromise(null) // No Stripe config; render form without Elements
+          if (mounted) setStripePromise(null)
           return
         }
         const p = await loadStripe(pk)
