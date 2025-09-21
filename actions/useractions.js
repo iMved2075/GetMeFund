@@ -6,7 +6,13 @@ import Payment from '@/models/Payment'
 
 export const initiate = async (amount, to_username, paymentform) => {
   await connectDb()
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+  // Load the recipient's Stripe secret key from DB
+  const recipient = await User.findOne({ username: to_username })
+  const secret = recipient?.stripeSecretKey
+  if (!secret) {
+    throw new Error('Stripe not configured for this creator')
+  }
+  const stripe = new Stripe(secret)
 
   const rupees = Number(amount)
   const paise = Math.round(rupees * 100)
@@ -28,9 +34,8 @@ export const initiate = async (amount, to_username, paymentform) => {
 
 export const fetchuser = async (username) => {
   await connectDb()
-  let u = await User.findOne({ username:username })
-  let user = u.toObject({flattenObjectIds: true})
-  return user
+  const u = await User.findOne({ username })
+  return u ? u.toObject({ flattenObjectIds: true }) : null
 }
 
 export const fetchpayments = async (username) => {
@@ -48,10 +53,31 @@ export const setSocialLinks = async (username, links) => {
 
 export const setPersonalInfo = async (username, info) => {
   await connectDb()
+  let u = await User.findOne({email:username})
+  if(info.username && info.username !== u.username) {
+    let existingUser = await User.findOne({username: info.username})
+    if(existingUser) {
+      throw new Error("Username already taken")
+    }
+    else{
+      await User.updateOne({email:username}, {username: info.username,firstName: info.firstName, lastName: info.lastName, role: info.role, phone: info.phone, bio: info.bio}, {new: true})
+      await Payment.updateMany({to_user: u.username}, {to_user: info.username})
+    }
+  }
   await User.findOneAndUpdate({email:username}, {firstName: info.firstName, lastName: info.lastName, role: info.role, phone: info.phone, bio: info.bio}, {new: true})
 }
 
 export const setAddress = async (username, addr) => {
   await connectDb()
   await User.findOneAndUpdate({email:username}, {country: addr.country, cityState: addr.cityState, postalCode: addr.postalCode}, {new: true})
+}
+
+export const setPaymentInfo = async (username, info) => {
+  await connectDb()
+  await User.findOneAndUpdate({email:username}, {stripePublishableKey: info.publishableKey, stripeSecretKey: info.secretKey}, {new: true})
+}
+
+export const setProfilePic = async (username, info) => {
+  await connectDb()
+  await User.findOneAndUpdate({email:username}, {profilePic: info.profilePic, coverPic: info.coverPic}, {new: true})
 }
