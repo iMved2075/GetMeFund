@@ -2,9 +2,12 @@
 import { useState, useEffect } from "react";
 import Modal from "./Modal";
 import { setAddress } from "@/actions/useractions";
+import { useSession } from 'next-auth/react';
+
 
 const AddressModal = ({ isOpen, onClose, initialData, onSave, username }) => {
   const [form, setForm] = useState(initialData);
+  const { data: session, update: updateSession } = useSession();
 
   useEffect(() => {
     if (isOpen) setForm(initialData);
@@ -15,10 +18,11 @@ const AddressModal = ({ isOpen, onClose, initialData, onSave, username }) => {
     setForm(f => ({ ...f, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     onSave && onSave(form);
-    setAddress(username, form);
+    await setAddress(username, form);
+    await updateSession();
     onClose();
   };
 
@@ -55,7 +59,7 @@ const AddressModal = ({ isOpen, onClose, initialData, onSave, username }) => {
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg"
+          className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-medium py-2 rounded-lg"
         >
           Save
         </button>

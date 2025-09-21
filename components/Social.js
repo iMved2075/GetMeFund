@@ -53,7 +53,7 @@ const Social = ({ isOpen, onClose, initialLinks, onSave, username }) => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg mt-4"
+          className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-medium py-2 px-4 rounded-lg mt-4"
         >
           Save Links
         </button>

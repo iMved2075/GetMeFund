@@ -14,11 +14,11 @@ const Modal = ({ isOpen, onClose, title, children }) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-opacity-0 backdrop-blur-xs flex items-center justify-center z-50"
       onClick={onClose} // close when clicking outside
     >
       <div
-        className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-6 w-full max-w-lg relative
+        className="bg-white dark:bg-cyan-950 rounded-2xl shadow-xl p-6 w-full max-w-lg relative
                    transform transition-all scale-95 animate-fadeIn"
         onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
       >
