@@ -59,6 +59,18 @@ const UserSchema = new Schema({
         type: String,
         trim: true
     },
+    stripePublishableKey: {
+        type: String,
+        default: null
+    },
+    stripeSecretKey: {
+        type: String,
+        default: null
+    },
+    stripeWebhookSecret: {
+        type: String,
+        default: null
+    },
     
     // Social Media Links
     socialMedia: {
