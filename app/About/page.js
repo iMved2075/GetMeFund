@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AboutPage = () => {
+const About = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white">
       {/* Hero Section */}
@@ -144,4 +144,8 @@ const AboutPage = () => {
   )
 }
 
-export default AboutPage
+export default About
+
+export const metadata = {
+  title: 'About - GetMeFund'
+}
