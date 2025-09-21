@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import Modal from "./Modal";
 import { setPaymentInfo } from '@/actions/useractions';
+import { toast, Bounce } from 'react-toastify';
 
 const PaymentInfoModal = ({ isOpen, onClose, initialData, onSave, username }) => {
     const [form, setForm] = useState(initialData);
@@ -19,6 +20,16 @@ const PaymentInfoModal = ({ isOpen, onClose, initialData, onSave, username }) =>
         e.preventDefault();
         onSave && onSave(form);
         setPaymentInfo(username, form);
+        toast.success('Payment information updated successfully!', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "dark",
+            transition: Bounce,
+        });
         onClose();
     }
 
