@@ -38,6 +38,13 @@ export const authoptions = NextAuth({
   ],
   // IMPORTANT: NextAuth requires a secret in production
   secret: NEXTAUTH_SECRET,
+  session: {
+    strategy: 'jwt'
+  },
+  // Optionally, direct users to a custom sign-in page if desired
+  // pages: {
+  //   signIn: '/login'
+  // },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       if (account.provider == 'github' || account.provider == "google" || account.provider == "facebook") {
@@ -87,8 +94,11 @@ export const authoptions = NextAuth({
     },
     async session({ session }) {
       // Send properties to the client, like an access_token and user id from a provider.
+      await connectDb()
       const dbUser = await User.findOne({ email: session.user.email })
-      session.user.name = dbUser.username
+      if (dbUser?.username) {
+        session.user.name = dbUser.username
+      }
       return session
     }
   }
