@@ -13,14 +13,17 @@ const Login = () => {
         }
     }, [session, router])
     return (
-        <div className='text-white py-14 container mx-auto'>
-            <h1 className="text-center font-bold text-3xl">Login to Get your fans support you</h1>
-            <div className="flex flex-col items-center gap-2 min-h-screen p-10">
+        <div className='flex flex-col text-white'>
+            <div className="flex-1 flex flex-col">
+                <div className="container mx-auto px-6 mt-16">
+                    <h1 className="text-center font-bold text-4xl md:text-5xl pb-10 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                        Login to Get your fans support you
+                    </h1>
+                <div className="flex flex-col items-center gap-4 max-w-md mx-auto">
                 <button  onClick={()=>{signIn("google")}}
                     className="flex items-center hover:cursor-pointer w-64 bg-white border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     <svg className="h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
                         viewBox="-0.5 0 48 48" version="1.1">
-
                         <g id="Icons" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                             <g id="Color-" transform="translate(-401.000000, -860.000000)">
                                 <g id="Google" transform="translate(401.000000, 860.000000)">
@@ -143,7 +146,8 @@ const Login = () => {
                     <span>Continue with Apple</span>
                 </button>
 
-
+                </div>
+                </div>
             </div>
         </div>
     )

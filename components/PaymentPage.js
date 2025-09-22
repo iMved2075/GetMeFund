@@ -309,14 +309,14 @@ function DonateFormStripe({ username }) {
         theme="dark"
         transition={Bounce}
       />
-      <div className='cover w-full relative'>
+      <div className='cover w-full relative pb-10'>
         <img 
           src={profilePicLinks.coverPic} 
           alt="cover" 
           className="object-cover w-full h-[350] cursor-pointer transition-opacity" 
           onDoubleClick={() => setIsCoverPicOpen(true)} 
         />
-        <div className='absolute -bottom-25 right-[43.5%] border-2 border-white rounded-full'>
+        <div className='absolute -bottom-15 right-[25%] md:right-[43.5%] border-2 border-white rounded-full'>
           <img 
             className='rounded-full h-48 w-48 cursor-pointer transition-opacity' 
             src={profilePicLinks.profilePic} 
@@ -360,26 +360,26 @@ function DonateFormStripe({ username }) {
           <span className='font-extrabold'> . </span>
           <span>₹ {payments.reduce((acc, p) => acc + p.amount, 0)} collected</span>
         </div>
-        <div className="payment flex gap-3 w-[80%] mt-11">
-          <div className="supporters w-1/2 bg-slate-900 text-white rounded-lg p-10">
+        <div className="payment flex md:flex-row flex-col gap-3 w-[80%] mt-11">
+          <div className="supporters md:w-1/2 bg-slate-900 text-white rounded-lg p-10">
             {/* Show list of supporters as a leaderboard with name, amount and message*/}
             <div className="leaderboard">
               <h2 className='font-bold text-lg text-center pb-5'>Top Supporters</h2>
               <div className="entry flex gap-10 justify-between py-2 border-b border-slate-700">
                 <span className="name w-1/3 font-bold">Name</span>
                 <span className="amount w-1/3 font-bold">Amount</span>
-                <span className="message w-1/3 font-bold">Message</span>
+                <span className="md:inline hidden message w-1/3 font-bold">Message</span>
               </div>
               {payments.map((p, index) => {
                 return <div key={index} className="entry flex gap-10 justify-between py-2 border-b border-slate-700">
                   <span className="flex gap-4 name w-1/3 p-2"><span>{p.name}</span></span>
                   <span className="amount w-1/3 p-2">{p.amount}</span>
-                  <span className="message w-1/3 p-2">{p.message}</span>
+                  <span className="md:inline hidden message w-1/3 p-2">{p.message}</span>
                 </div>
               })}
             </div>
           </div>
-          <div className="makePayments w-1/2 bg-slate-900 text-white rounded-lg p-10">
+          <div className="makePayments md:w-1/2 bg-slate-900 text-white rounded-lg p-10">
             <h2 className='font-bold text-lg text-center pb-5'>Support the creator</h2>
             <div className="inputFields flex flex-col gap-4">
               <input
@@ -404,7 +404,7 @@ function DonateFormStripe({ username }) {
                 onChange={(e) => setAmount(e.target.value)}
                 min={1}
               />
-              <div className="presetAmounts flex justify-around gap-3">
+              <div className="presetAmounts justify-around gap-3 md:flex hidden">
                 <button type="button" className='bg-slate-800 py-2 px-10 rounded-lg hover:bg-slate-700 transition' onClick={() => setAmount(100)}>Donate ₹100</button>
                 <button type="button" className='bg-slate-800 py-2 px-10 rounded-lg hover:bg-slate-700 transition' onClick={() => setAmount(200)}>Donate ₹200</button>
                 <button type="button" className='bg-slate-800 py-2 px-10 rounded-lg hover:bg-slate-700 transition' onClick={() => setAmount(500)}>Donate ₹500</button>
