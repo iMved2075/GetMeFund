@@ -58,14 +58,6 @@ export const authoptions = NextAuth({
             email: user.email,
             username: user.email.split("@")[0],
             profilePic: user.image, // Save profile picture from OAuth provider
-            socialMedia: {
-              facebook: "https://www.facebook.com",
-              twitter: "https://www.twitter.com",
-              linkedin: "https://www.linkedin.com",
-              instagram: "https://www.instagram.com",
-              github: "https://www.github.com",
-              youtube: "https://www.youtube.com"
-            }
           })
         }
         return true
@@ -79,14 +71,6 @@ export const authoptions = NextAuth({
             email: user.email,
             username: user.email.split("@")[0],
             profilePic: user.image, // Save profile picture from OAuth provider
-            socialMedia: {
-              facebook: "https://www.facebook.com",
-              twitter: "https://www.twitter.com",
-              linkedin: "https://www.linkedin.com",
-              instagram: "https://www.instagram.com",
-              github: "https://www.github.com",
-              youtube: "https://www.youtube.com"
-            }
           })
         }
         return true

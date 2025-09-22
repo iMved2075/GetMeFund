@@ -111,6 +111,39 @@ function DonateFormNoStripe({ username }) {
         <div className='text-slate-400'>
           {currentUser?.bio || 'This user has no bio'}
         </div>
+        {/* Social media buttons */}
+        <div className="flex gap-3 p-2">
+          {currentUser?.socialMedia?.facebook && (
+            <a href={currentUser.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800/60 ring-1 ring-slate-700 hover:bg-slate-700 transition">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xNCAxMy41aDIuNWwxLTRIMTR2LTJjMC0xLjAzIDAtMiAyLTJoMS41VjIuMTRjLS4zMjYtLjA0My0xLjU1Ny0uMTQtMi44NTctLjE0QzExLjkyOCAyIDEwIDMuNjU3IDEwIDYuN3YyLjhIN3Y0aDNWMjJoNHoiLz48L3N2Zz4=" className="w-4 h-4 md:w-6 md:h-6 invert-50 group-hover:invert-0" alt="Facebook" />
+            </a>
+          )}
+          {currentUser?.socialMedia?.twitter && (
+            <a href={currentUser.socialMedia.twitter} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800/60 ring-1 ring-slate-700 hover:bg-slate-700 transition">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDE0IDE0Ij48ZyBmaWxsPSJub25lIj48ZyBjbGlwLXBhdGg9InVybCgjU1ZHRzFPdDRjQUQpIj48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xMS4wMjUuNjU2aDIuMTQ3TDguNDgyIDYuMDNMMTQgMTMuMzQ0SDkuNjhMNi4yOTQgOC45MDlsLTMuODcgNC40MzVILjI3NWw1LjAxNi01Ljc1TDAgLjY1N2g0LjQzTDcuNDg2IDQuNzF6bS0uNzU1IDExLjRoMS4xOUwzLjc4IDEuODc3SDIuNTA0eiIvPjwvZz48ZGVmcz48Y2xpcFBhdGggaWQ9IlNWR0cxT3Q0Y0FEIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCAwaDE0djE0SDB6Ii8+PC9jbGlwUGF0aD48L2RlZnM+PC9nPjwvc3ZnPg==" className="w-4 h-4 md:w-6 md:h-6 invert-50 group-hover:invert-0" alt="X" />
+            </a>
+          )}
+          {currentUser?.socialMedia?.linkedin && (
+            <a href={currentUser.socialMedia.linkedin} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800/60 ring-1 ring-slate-700 hover:bg-slate-700 transition">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48ZyBmaWxsPSJjdXJyZW50Q29sb3IiPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEyLjUxIDguNzk2djEuNjk3YTMuNzQgMy43NCAwIDAgMSAzLjI4OC0xLjY4NGMzLjQ1NSAwIDQuMjAyIDIuMTYgNC4yMDIgNC45N1YxOS41aC0zLjJ2LTUuMDcyYzAtMS4yMS0uMjQ0LTIuNzY2LTIuMTI4LTIuNzY2Yy0xLjgyNyAwLTIuMTM5IDEuMzE3LTIuMTM5IDIuNjc2VjE5LjVoLTMuMTlWOC43OTZoMy4xNjhaTTcuMiA2LjEwNmExLjYxIDEuNjEgMCAwIDEtLjk4OCAxLjQ4M2ExLjU5NSAxLjU5NSAwIDAgMS0xLjc0My0uMzQ4QTEuNjA3IDEuNjA3IDAgMCAxIDUuNiA0LjVhMS42IDEuNiAwIDAgMSAxLjYgMS42MDYiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjxwYXRoIGQ9Ik03LjIgOC44MDlINFYxOS41aDMuMnoiLz48L2c+PC9zdmc+" className="w-4 h-4 md:w-6 md:h-6 invert-50 group-hover:invert-0" alt="LinkedIn" />
+            </a>
+          )}
+          {currentUser?.socialMedia?.instagram && (
+            <a href={currentUser.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800/60 ring-1 ring-slate-700 hover:bg-slate-700 transition">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48ZyBmaWxsPSJub25lIj48cGF0aCBkPSJtMTIuNTkzIDIzLjI1OGwtLjAxMS4wMDJsLS4wNzEuMDM1bC0uMDIuMDA0bC0uMDE0LS4wMDRsLS4wNzEtLjAzNXEtLjAxNi0uMDA1LS4wMjQuMDA1bC0uMDA0LjAxbC0uMDE3LjQyOGwuMDA1LjAybC4wMS4wMTNsLjEwNC4wNzRsLjAxNS4wMDRsLjAxMi0uMDA0bC4xMDQtLjA3NGwuMDEyLS4wMTZsLjAwNC0uMDE3bC0uMDE3LS40MjdxLS4wMDQtLjAxNi0uMDE3LS4wMThtLjI2NS0uMTEzbC0uMDEzLjAwMmwtLjE4NS4wOTNsLS4wMS4wMWwtLjAwMy4wMTFsLjAxOC40M2wuMDA1LjAxMmwuMDA4LjAwN2wuMjAxLjA5M3EuMDE5LjAwNS4wMjktLjAwOGwuMDA0LS4wMTRsLS4wMzQtLjYxNHEtLjAwNS0uMDE4LS4wMi0uMDIybS0uNzE1LjAwMmEuMDIuMDIgMCAwIDAtLjAyNy4wMDZsLS4wMDYuMDE0bC0uMDM0LjYxNHEuMDAxLjAxOC4wMTcuMDI0bC4wMTUtLjAwMmwuMjAxLS4wOTNsLjAxLS4wMDhsLjAwNC0uMDExbC4wMTctLjQzbC0uMDAzLS4wMTJsLS4wMS0uMDF6Ii8+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMTYgM2E1IDUgMCAwIDEgNSA1djhhNSA1IDAgMCAxLTUgNUg4YTUgNSAwIDAgMS01LTVWOGE1IDUgMCAwIDEgNS01em0tNCA1YTQgNCAwIDEgMCAwIDhhNCA0IDAgMCAwIDAtOG0wIDJhMiAyIDAgMSAxIDAgNGEyIDIgMCAwIDEgMC00bTQuNS0zLjVhMSAxIDAgMSAwIDAgMmExIDEgMCAwIDAgMC0yIi8+PC9nPjwvc3ZnPg==" className="w-4 h-4 md:w-6 md:h-6 invert-50 group-hover:invert-0" alt="Instagram" />
+            </a>
+          )}
+          {currentUser?.socialMedia?.github && (
+            <a href={currentUser.socialMedia.github} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800/60 ring-1 ring-slate-700 hover:bg-slate-700 transition">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xMiAyQTEwIDEwIDAgMCAwIDIgMTJjMCA0LjQyIDIuODcgOC4xNyA2Ljg0IDkuNWMuNS4wOC42Ni0uMjMuNjYtLjV2LTEuNjljLTIuNzcuNi0zLjM2LTEuMzQtMy4zNi0xLjM0Yy0uNDYtMS4xNi0xLjExLTEuNDctMS4xMS0xLjQ3Yy0uOTEtLjYyLjA3LS42LjA3LS42YzEgLjA3IDEuNTMgMS4wMyAxLjUzIDEuMDNjLjg3IDEuNTIgMi4zNCAxLjA3IDIuOTEuODNjLjA5LS42NS4zNS0xLjA5LjYzLTEuMzRjLTIuMjItLjI1LTQuNTUtMS4xMS00LjU1LTQuOTJjMC0xLjExLjM4LTIgMS4wMy0yLjcxYy0uMS0uMjUtLjQ1LTEuMjkuMS0yLjY0YzAgMCAuODQtLjI3IDIuNzUgMS4wMmMuNzktLjIyIDEuNjUtLjMzIDIuNS0uMzNzMS43MS4xMSAyLjUuMzNjMS45MS0xLjI5IDIuNzUtMS4wMiAyLjc1LTEuMDJjLjU1IDEuMzUuMiAyLjM5LjEgMi42NGMuNjUuNzEgMS4wMyAxLjYgMS4wMyAyLjcxYzAgMy44Mi0yLjM0IDQuNjYtNC41NyA0LjkxYy4zNi4zMS42OS45Mi42OSAxLjg1VjIxYzAgLjI3LjE2LjU5LjY3LjVDMTkuMTQgMjAuMTYgMjIgMTYuNDIgMjIgMTJBMTAgMTAgMCAwIDAgMTIuMiA2IiBjbGlwLXBhdGg9InVybCgjU1ZHRzFPdDRjQUQpIi8+PC9zdmc+" alt="GitHub" className="w-4 h-4 md:w-6 md:h-6 invert-50 group-hover:invert-0" />
+            </a>
+          )}
+          {currentUser?.socialMedia?.youtube && (
+            <a href={currentUser.socialMedia.youtube} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800/60 ring-1 ring-slate-700 hover:bg-slate-700 transition">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Im0xMCAxNWw1LjE5LTNMMTAgOXptMTEuNTYtNy44M2MuMTMuNDcuMjIgMS4xLjI4IDEuOWMuMDcuOC4xIDEuNDkuMSAyLjA5TDIyIDEyYzAgMi4xOS0uMTYgMy44LS40NCA0LjgzYy0uMjUuOS0uODMgMS40OC0xLjczIDEuNzNjLS40Ny4xMy0xLjMzLjIyLTIuNjUuMjhjLTEuMy4wNy0yLjQ5LjEtMy41OS4xTDEyIDE5Yy00LjE5IDAtNi44LS4xNi03LjgzLS40NGMtLjktLjI1LTEuNDgtLjgzLTEuNzMtMS43M2MtLjEzLS40Ny0uMjItMS4xLS4yOC0xLjljLS4wNy0uOC0uMS0xLjQ5LS4xLTIuMDlMMiAxMmMwLTIuMTkuMTYtMy44LjQ0LTQuODNjLjI1LS45LjgzLTEuNDggMS43My0xLjczYy40Ny0uMTMgMS4zMy0uMjIgMi42NS0uMjhjMS4zLS4wNyAyLjQ5LS4xIDMuNTktLjFMMTIgNWM0LjE5IDAgNi44LjE2IDcuODMuNDRjLjkuMjUgMS40OC44MyAxLjczIDEuNzMiLz48L3N2Zz4=" className="w-4 h-4 md:w-6 md:h-6 invert-50 group-hover:invert-0" alt="YouTube" />
+            </a>
+          )}
+        </div>
         <div className='text-slate-400'>
           9,719 members . 82 posts . $15,450/release
         </div>
@@ -354,6 +387,39 @@ function DonateFormStripe({ username }) {
         </div>
         <div className='text-slate-400'>
           {currentUser?.bio || 'This user has no bio'}
+        </div>
+        {/* Social media buttons */}
+        <div className="flex gap-3 p-2">
+          {currentUser?.socialMedia?.facebook && (
+            <a href={currentUser.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800/60 ring-1 ring-slate-700 hover:bg-slate-700 transition">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xNCAxMy41aDIuNWwxLTRIMTR2LTJjMC0xLjAzIDAtMiAyLTJoMS41VjIuMTRjLS4zMjYtLjA0My0xLjU1Ny0uMTQtMi44NTctLjE0QzExLjkyOCAyIDEwIDMuNjU3IDEwIDYuN3YyLjhIN3Y0aDNWMjJoNHoiLz48L3N2Zz4=" className="w-4 h-4 md:w-6 md:h-6 invert-50 group-hover:invert-0" alt="Facebook" />
+            </a>
+          )}
+          {currentUser?.socialMedia?.twitter && (
+            <a href={currentUser.socialMedia.twitter} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800/60 ring-1 ring-slate-700 hover:bg-slate-700 transition">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDE0IDE0Ij48ZyBmaWxsPSJub25lIj48ZyBjbGlwLXBhdGg9InVybCgjU1ZHRzFPdDRjQUQpIj48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xMS4wMjUuNjU2aDIuMTQ3TDguNDgyIDYuMDNMMTQgMTMuMzQ0SDkuNjhMNi4yOTQgOC45MDlsLTMuODcgNC40MzVILjI3NWw1LjAxNi01Ljc1TDAgLjY1N2g0LjQzTDcuNDg2IDQuNzF6bS0uNzU1IDExLjRoMS4xOUwzLjc4IDEuODc3SDIuNTA0eiIvPjwvZz48ZGVmcz48Y2xpcFBhdGggaWQ9IlNWR0cxT3Q0Y0FEIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCAwaDE0djE0SDB6Ii8+PC9jbGlwUGF0aD48L2RlZnM+PC9nPjwvc3ZnPg==" className="w-4 h-4 md:w-6 md:h-6 invert-50 group-hover:invert-0" alt="X" />
+            </a>
+          )}
+          {currentUser?.socialMedia?.linkedin && (
+            <a href={currentUser.socialMedia.linkedin} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800/60 ring-1 ring-slate-700 hover:bg-slate-700 transition">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48ZyBmaWxsPSJjdXJyZW50Q29sb3IiPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEyLjUxIDguNzk2djEuNjk3YTMuNzQgMy43NCAwIDAgMSAzLjI4OC0xLjY4NGMzLjQ1NSAwIDQuMjAyIDIuMTYgNC4yMDIgNC45N1YxOS41aC0zLjJ2LTUuMDcyYzAtMS4yMS0uMjQ0LTIuNzY2LTIuMTI4LTIuNzY2Yy0xLjgyNyAwLTIuMTM5IDEuMzE3LTIuMTM5IDIuNjc2VjE5LjVoLTMuMTlWOC43OTZoMy4xNjhaTTcuMiA2LjEwNmExLjYxIDEuNjEgMCAwIDEtLjk4OCAxLjQ4M2ExLjU5NSAxLjU5NSAwIDAgMS0xLjc0My0uMzQ4QTEuNjA3IDEuNjA3IDAgMCAxIDUuNiA0LjVhMS42IDEuNiAwIDAgMSAxLjYgMS42MDYiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjxwYXRoIGQ9Ik03LjIgOC44MDlINFYxOS41aDMuMnoiLz48L2c+PC9zdmc+" className="w-4 h-4 md:w-6 md:h-6 invert-50 group-hover:invert-0" alt="LinkedIn" />
+            </a>
+          )}
+          {currentUser?.socialMedia?.instagram && (
+            <a href={currentUser.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800/60 ring-1 ring-slate-700 hover:bg-slate-700 transition">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48ZyBmaWxsPSJub25lIj48cGF0aCBkPSJtMTIuNTkzIDIzLjI1OGwtLjAxMS4wMDJsLS4wNzEuMDM1bC0uMDIuMDA0bC0uMDE0LS4wMDRsLS4wNzEtLjAzNXEtLjAxNi0uMDA1LS4wMjQuMDA1bC0uMDA0LjAxbC0uMDE3LjQyOGwuMDA1LjAybC4wMS4wMTNsLjEwNC4wNzRsLjAxNS4wMDRsLjAxMi0uMDA0bC4xMDQtLjA3NGwuMDEyLS4wMTZsLjAwNC0uMDE3bC0uMDE3LS40MjdxLS4wMDQtLjAxNi0uMDE3LS4wMThtLjI2NS0uMTEzbC0uMDEzLjAwMmwtLjE4NS4wOTNsLS4wMS4wMWwtLjAwMy4wMTFsLjAxOC40M2wuMDA1LjAxMmwuMDA4LjAwN2wuMjAxLjA5M3EuMDE5LjAwNS4wMjktLjAwOGwuMDA0LS4wMTRsLS4wMzQtLjYxNHEtLjAwNS0uMDE4LS4wMi0uMDIybS0uNzE1LjAwMmEuMDIuMDIgMCAwIDAtLjAyNy4wMDZsLS4wMDYuMDE0bC0uMDM0LjYxNHEuMDAxLjAxOC4wMTcuMDI0bC4wMTUtLjAwMmwuMjAxLS4wOTNsLjAxLS4wMDhsLjAwNC0uMDExbC4wMTctLjQzbC0uMDAzLS4wMTJsLS4wMS0uMDF6Ii8+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMTYgM2E1IDUgMCAwIDEgNSA1djhhNSA1IDAgMCAxLTUgNUg4YTUgNSAwIDAgMS01LTVWOGE1IDUgMCAwIDEgNS01em0tNCA1YTQgNCAwIDEgMCAwIDhhNCA0IDAgMCAwIDAtOG0wIDJhMiAyIDAgMSAxIDAgNGEyIDIgMCAwIDEgMC00bTQuNS0zLjVhMSAxIDAgMSAwIDAgMmExIDEgMCAwIDAgMC0yIi8+PC9nPjwvc3ZnPg==" className="w-4 h-4 md:w-6 md:h-6 invert-50 group-hover:invert-0" alt="Instagram" />
+            </a>
+          )}
+          {currentUser?.socialMedia?.github && (
+            <a href={currentUser.socialMedia.github} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800/60 ring-1 ring-slate-700 hover:bg-slate-700 transition">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xMiAyQTEwIDEwIDAgMCAwIDIgMTJjMCA0LjQyIDIuODcgOC4xNyA2Ljg0IDkuNWMuNS4wOC42Ni0uMjMuNjYtLjV2LTEuNjljLTIuNzcuNi0zLjM2LTEuMzQtMy4zNi0xLjM0Yy0uNDYtMS4xNi0xLjExLTEuNDctMS4xMS0xLjQ3Yy0uOTEtLjYyLjA3LS42LjA3LS42YzEgLjA3IDEuNTMgMS4wMyAxLjUzIDEuMDNjLjg3IDEuNTIgMi4zNCAxLjA3IDIuOTEuODNjLjA5LS42NS4zNS0xLjA5LjYzLTEuMzRjLTIuMjItLjI1LTQuNTUtMS4xMS00LjU1LTQuOTJjMC0xLjExLjM4LTIgMS4wMy0yLjcxYy0uMS0uMjUtLjQ1LTEuMjkuMS0yLjY0YzAgMCAuODQtLjI3IDIuNzUgMS4wMmMuNzktLjIyIDEuNjUtLjMzIDIuNS0uMzNzMS43MS4xMSAyLjUuMzNjMS45MS0xLjI5IDIuNzUtMS4wMiAyLjc1LTEuMDJjLjU1IDEuMzUuMiAyLjM5LjEgMi42NGMuNjUuNzEgMS4wMyAxLjYgMS4wMyAyLjcxYzAgMy44Mi0yLjM0IDQuNjYtNC41NyA0LjkxYy4zNi4zMS42OS45Mi42OSAxLjg1VjIxYzAgLjI3LjE2LjU5LjY3LjVDMTkuMTQgMjAuMTYgMjIgMTYuNDIgMjIgMTJBMTAgMTAgMCAwIDAgMTIuMiA2IiBjbGlwLXBhdGg9InVybCgjU1ZHRzFPdDRjQUQpIi8+PC9zdmc+" alt="GitHub" className="w-4 h-4 md:w-6 md:h-6 invert-50 group-hover:invert-0" />
+            </a>
+          )}
+          {currentUser?.socialMedia?.youtube && (
+            <a href={currentUser.socialMedia.youtube} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800/60 ring-1 ring-slate-700 hover:bg-slate-700 transition">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Im0xMCAxNWw1LjE5LTNMMTAgOXptMTEuNTYtNy44M2MuMTMuNDcuMjIgMS4xLjI4IDEuOWMuMDcuOC4xIDEuNDkuMSAyLjA5TDIyIDEyYzAgMi4xOS0uMTYgMy44LS40NCA0LjgzYy0uMjUuOS0uODMgMS40OC0xLjczIDEuNzNjLS40Ny4xMy0xLjMzLjIyLTIuNjUuMjhjLTEuMy4wNy0yLjQ5LjEtMy41OS4xTDEyIDE5Yy00LjE5IDAtNi44LS4xNi03LjgzLS40NGMtLjktLjI1LTEuNDgtLjgzLTEuNzMtMS43M2MtLjEzLS40Ny0uMjItMS4xLS4yOC0xLjljLS4wNy0uOC0uMS0xLjQ5LS4xLTIuMDlMMiAxMmMwLTIuMTkuMTYtMy44LjQ0LTQuODNjLjI1LS45LjgzLTEuNDggMS43My0xLjczYy40Ny0uMTMgMS4zMy0uMjIgMi42NS0uMjhjMS4zLS4wNyAyLjQ5LS4xIDMuNTktLjFMMTIgNWM0LjE5IDAgNi44LjE2IDcuODMuNDRjLjkuMjUgMS40OC44MyAxLjczIDEuNzMiLz48L3N2Zz4=" className="w-4 h-4 md:w-6 md:h-6 invert-50 group-hover:invert-0" alt="YouTube" />
+            </a>
+          )}
         </div>
         <div className='text-slate-400'>
           <span>{payments.length} payments </span>
