@@ -7,6 +7,9 @@ import GitHubProvider from 'next-auth/providers/github'
 import User from '@/models/User'
 import connectDb from '@/db/connectDb'
 
+const isProd = process.env.NODE_ENV === 'production'
+const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET || (!isProd ? 'dev-insecure-nextauth-secret' : undefined)
+
 export const authoptions = NextAuth({
   providers: [
     // OAuth authentication providers...
@@ -33,6 +36,8 @@ export const authoptions = NextAuth({
     //   from: 'NextAuth.js <no-reply@example.com>'
     // }),
   ],
+  // IMPORTANT: NextAuth requires a secret in production
+  secret: NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       if (account.provider == 'github' || account.provider == "google" || account.provider == "facebook") {

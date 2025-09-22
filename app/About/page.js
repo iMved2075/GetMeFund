@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 const About = () => {
   return (
@@ -24,7 +25,7 @@ const About = () => {
               enabling direct support that fuels creativity and innovation.
             </p>
             <p className="text-lg text-gray-300 leading-relaxed mb-6">
-              Whether you're an artist, developer, educator, or any type of content creator, our platform provides 
+              Whether you&apos;re an artist, developer, educator, or any type of content creator, our platform provides 
               the tools you need to build a sustainable creator economy around your work.
             </p>
             <p className="text-lg text-gray-300 leading-relaxed">
@@ -131,12 +132,12 @@ const About = () => {
             Join thousands of creators who are already building sustainable income through community support.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/dashboard" className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105">
+            <Link href="/dashboard" className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105">
               Start Creating
-            </a>
-            <a href="/" className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105">
+            </Link>
+            <Link href="/" className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105">
               Browse Creators
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 
 const Modal = ({ isOpen, onClose, title, children }) => {
-  if (!isOpen) return null;
-
-  // ESC key closes modal
+  // ESC key closes modal (hook must be unconditional; guard inside)
   useEffect(() => {
+    if (!isOpen) return;
     const handleEsc = (e) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
-  }, [onClose]);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
 
   return (
     <div
