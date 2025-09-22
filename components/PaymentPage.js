@@ -409,7 +409,7 @@ function DonateFormStripe({ username }) {
                 <button type="button" className='bg-slate-800 py-2 px-10 rounded-lg hover:bg-slate-700 transition' onClick={() => setAmount(200)}>Donate ₹200</button>
                 <button type="button" className='bg-slate-800 py-2 px-10 rounded-lg hover:bg-slate-700 transition' onClick={() => setAmount(500)}>Donate ₹500</button>
               </div>
-
+              <div className="text-xs text-center text-red-700">For dummy payment use card no: 4242 4242 4242 4242 expiry: 12/34 cvs: 123</div>
               {/* Card details */}
               <div className='p-3 rounded-lg bg-slate-800 border border-slate-700'>
                 <CardElement options={{
