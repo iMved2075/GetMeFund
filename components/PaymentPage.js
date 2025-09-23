@@ -6,9 +6,11 @@ import { ToastContainer, toast, Bounce } from 'react-toastify'
 import { fetchuser, fetchpayments } from '@/actions/useractions'
 import ProfilePicModal from './ProfilePicModal'
 import CoverPicModal from './CoverPicModal'
+import { useSession } from 'next-auth/react'
 
 // Form rendered when Stripe is NOT configured (no Elements wrapper, no hooks)
 function DonateFormNoStripe({ username }) {
+  const { data: session } = useSession()
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
   const [amount, setAmount] = useState('')
@@ -34,6 +36,8 @@ function DonateFormNoStripe({ username }) {
     let dbpayments = await fetchpayments(username)
     setpayments(dbpayments || [])
   }
+
+  const isOwner = session?.user?.email === currentUser?.email
 
   const handleDonate = async () => {
     setErrorMsg('')
@@ -70,19 +74,20 @@ function DonateFormNoStripe({ username }) {
           src={profilePicLinks.coverPic} 
           alt="cover" 
           className="object-cover w-full h-[350] cursor-pointer hover:opacity-90 transition-opacity" 
-          onDoubleClick={() => setIsCoverPicOpen(true)} 
+          onDoubleClick={isOwner?() => setIsCoverPicOpen(true):undefined} 
         />
         <div className='absolute -bottom-25 right-[43.5%] border-2 border-white rounded-full'>
           <img 
             className='rounded-full h-48 w-48 cursor-pointer hover:opacity-90 transition-opacity' 
             src={profilePicLinks.profilePic} 
             alt="profile" 
-            onDoubleClick={() => setIsProfilePicOpen(true)} 
+            onDoubleClick={isOwner?() => setIsProfilePicOpen(true):undefined} 
           />
         </div>
         
         {/* Profile Picture Modal */}
-        {isProfilePicOpen && (
+
+        {isProfilePicOpen && session.status === "authenticated" && (
           <ProfilePicModal
             isOpen={isProfilePicOpen}
             onClose={() => setIsProfilePicOpen(false)}
@@ -226,6 +231,7 @@ function DonateFormNoStripe({ username }) {
 
 // Form rendered only when Stripe is configured (inside Elements, uses hooks)
 function DonateFormStripe({ username }) {
+  const { data: session } = useSession()
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
   const [amount, setAmount] = useState('')
@@ -326,6 +332,7 @@ function DonateFormStripe({ username }) {
       setLoading(false)
     }
   }
+  const isOwner = session?.user?.email === currentUser?.email
 
   return (
     <>
@@ -343,18 +350,19 @@ function DonateFormStripe({ username }) {
         transition={Bounce}
       />
       <div className='cover w-full relative pb-10'>
+        
         <img 
           src={profilePicLinks.coverPic} 
           alt="cover" 
           className="object-cover w-full h-[350] cursor-pointer transition-opacity" 
-          onDoubleClick={() => setIsCoverPicOpen(true)} 
+          onDoubleClick={isOwner ? () => setIsCoverPicOpen(true) : undefined} 
         />
         <div className='absolute -bottom-15 right-[25%] md:right-[43.5%] border-2 border-white rounded-full'>
           <img 
             className='rounded-full h-48 w-48 cursor-pointer transition-opacity' 
             src={profilePicLinks.profilePic} 
             alt="profile" 
-            onDoubleClick={() => setIsProfilePicOpen(true)} 
+            onDoubleClick={isOwner ? () => setIsProfilePicOpen(true) : undefined} 
           />
         </div>
 
@@ -534,8 +542,6 @@ const PaymentPage = ({ username }) => {
     return () => { mounted = false }
   }, [username])
 
-  // Always render the page.
-  // If Stripe is configured, wrap the Stripe-specific form with Elements; otherwise render non-Stripe form.
   if (stripePromise) {
     return (
       <Elements stripe={stripePromise}>
