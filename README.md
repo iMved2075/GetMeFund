@@ -103,7 +103,6 @@ Facebook app setup:
 - Website Site URL: `http://localhost:3000/`
 - If the app is in Development, add your Facebook account as a Tester/Developer.
 
-
 ## Scripts
 - `npm run dev` – start dev server
 - `npm run build` – build
