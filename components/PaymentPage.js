@@ -73,12 +73,12 @@ function DonateFormNoStripe({ username }) {
         <img 
           src={profilePicLinks.coverPic} 
           alt="cover" 
-          className="object-cover w-full h-[350] cursor-pointer hover:opacity-90" 
+          className="object-cover w-full h-[350] cursor-pointer" 
           onDoubleClick={isOwner?() => setIsCoverPicOpen(true):undefined} 
         />
         <div className='absolute -bottom-25 right-[43.5%] border-2 border-white rounded-full'>
           <img 
-            className='rounded-full h-48 w-48 cursor-pointer hover:opacity-90' 
+            className='rounded-full h-48 w-48 cursor-pointer' 
             src={profilePicLinks.profilePic} 
             alt="profile" 
             onDoubleClick={isOwner?() => setIsProfilePicOpen(true):undefined} 
